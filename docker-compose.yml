@@ -9,4 +9,13 @@ services:
       - "8000:8000"
     volumes:
       - .:/app
+    depends_on:
+      - mongo # Asegúrate de que el servicio de FastAPI espere a que MongoDB esté disponible
       
+  mongo:
+    image: mongo:latest # Utiliza la imagen oficial de MongoDB
+    ports:
+      - "27017:27017" # Expón el puerto de MongoDB para que pueda ser accedido desde el host
+    volumes:
+      - ./data/db:/data/db # Mapea un volumen para persistir los datos de MongoDB
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d # Montar el directorio de scripts de inicialización

@@ -1,6 +1,6 @@
 # Proyecto API_3B
 
-Este proyecto es una aplicación API desarrollada con FastAPI que realiza tres endpoints los cuales se enfocan en la gestion de prodcutos tipo punto de venta, se manejará un sistema de alertas que se ejecuta como un JOB el cual se realiza como proceso secundario, se generará documentación sobre la API y esetara todo montado sobre un ambiente docker simulando una arquitectura de multiprocesos.
+Este proyecto es una aplicación API desarrollada con FastAPI que realiza tres endpoints los cuales se enfocan en la gestion de prodcutos tipo punto de venta, se manejará un sistema de alertas que se ejecuta como un JOB el cual se realiza como proceso secundario, se generará documentación sobre la API y esetara todo montado sobre un ambiente docker simulando una arquitectura de multiprocesos, también se simulara una base no relacional de menera local con un documento JSON llamado data.json.
 
 ## Requisitos
 
@@ -17,11 +17,13 @@ Este proyecto es una aplicación API desarrollada con FastAPI que realiza tres e
 
 ## Endpoints
 
-- POST `/products`: Se usa para crear un nuevo producto con los atributos sku y name (obligatorios). Un nuevo producto siempre se crea con un stock de 100.
+- GET `/api/products`: Se usa para ver la lista de productos.
 
-- PATCH `/inventroies/products/{PRODUCT_ID}`: Se usa para agregar stock al producto.
+- POST `/api/products`: Se usa para crear un nuevo producto con los atributos sku y name (obligatorios). Un nuevo producto siempre se crea con un stock de 100.
 
-- POST `orders`: Para comprar productos
+- PATCH `/api/inventroies/products/{PRODUCT_ID}`: Se usa para agregar stock al producto.
+
+- POST `/api/orders`: Para comprar productos
 
 ## Alertas
 
