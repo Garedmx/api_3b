@@ -32,7 +32,8 @@ def new_producto(productos_data_list):
             id = str(producto.id)
             ids.append({"storage":"SUCCESS", "_id":id})
         except Exception as e:
-            ids.append({"storage":"ERROR", "sku":registro.sku})
+            print(e)
+            ids.append({"storage":"ERROR", "sku":sku})
     result = json.dumps(ids)  
     return {"result": result}
 
@@ -48,14 +49,13 @@ def update_producto(sku, data):
         else:
             return {"update":"ERROR","sku":sku} 
     except Exception as e:
-            return {"update":"ERROR","error":e}
+            print(e)
+            return {"update":"ERROR","sku":sku}
 
 def sell_productos(sell_productos_list):
     ids = []
     for registro in sell_productos_list:
-        #sku = registro.get("sku",None)
         sku = registro.sku
-        #cantidad = registro.get("cantidad",0)
         cantidad = registro.cantidad
         try:
             producto = Producto.objects(sku=sku).first()
@@ -73,8 +73,8 @@ def sell_productos(sell_productos_list):
                     else:
                         ids.append({"update":"SUCCESS", "_id":id})
         except Exception as e:
-            #ids.append({"update":"ERROR", "error":e})
-            raise ValueError("Ha ocurrido un error") from e
+            print(e)
+            ids.append({"update":"ERROR", "sku":sku})
     result = json.dumps(ids)  
     return {"result": result}
  

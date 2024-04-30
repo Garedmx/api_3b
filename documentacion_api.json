@@ -1,0 +1,341 @@
+{
+    "openapi": "3.1.0",
+    "info": {
+      "title": "FastAPI",
+      "version": "0.1.0"
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Index",
+          "description": "Esta funcion da la bienvenida a la API, mostrando un pequeño resumen de que se puede hacer con la API_3B",
+          "operationId": "index__get",
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/products": {
+        "get": {
+          "summary": "Get Productos",
+          "description": "Este endpoint regresa todo los productos almacenados en la Base de Datos.",
+          "operationId": "get_productos_api_products_get",
+          "parameters": [
+            {
+              "name": "sku",
+              "in": "query",
+              "required": false,
+              "schema": {
+                "type": "string",
+                "description": "SKU especifico a consultar",
+                "title": "Sku"
+              },
+              "description": "SKU especifico a consultar"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/ProductosData"
+                    },
+                    "title": "Response Get Productos Api Products Get"
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Post Productos",
+          "description": "Este endpoint crea un nuevo producto en la Base de Datos recibiendo una lisat de los nuevos productos:\n[\n    {\n        'sku':'SKU01', (requiered) \n        'name': 'Producto 1', (requiered)\n        'stock': 100, (optional)\n        'price': 10.25 (optional)\n    },\n    {\n        'sku':'SKU02', (requiered) \n        'name': 'Producto 2', (requiered)\n        'stock': 100, (optional)\n        'price': 10.25 (optional)\n    }\n]",
+          "operationId": "post_productos_api_products_post",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "anyOf": [
+                        {
+  
+                        },
+                        {
+                          "type": "null"
+                        }
+                      ]
+                    }
+                  },
+                  "title": "Productos Data List"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/inventroies/products/{sku}": {
+        "post": {
+          "summary": "Patch Producto",
+          "description": "Este endpoint nos permite agregar stock a un sku",
+          "operationId": "patch_producto_api_inventroies_products__sku__post",
+          "parameters": [
+            {
+              "name": "sku",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string",
+                "title": "Sku"
+              }
+            }
+          ],
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductosStock"
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/api/orders": {
+        "post": {
+          "summary": "Update Productos",
+          "description": "Este endpoint nos permite simular compras de productos restando el stock y detonando un JOB como alerta cuando el STOCK sea menor a 10",
+          "operationId": "update_productos_api_orders_post",
+          "requestBody": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ProductosSell"
+                  },
+                  "type": "array",
+                  "title": "Sell Productos List"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Response",
+              "content": {
+                "application/json": {
+                  "schema": {
+  
+                  }
+                }
+              }
+            },
+            "422": {
+              "description": "Validation Error",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/HTTPValidationError"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "HTTPValidationError": {
+          "properties": {
+            "detail": {
+              "items": {
+                "$ref": "#/components/schemas/ValidationError"
+              },
+              "type": "array",
+              "title": "Detail"
+            }
+          },
+          "type": "object",
+          "title": "HTTPValidationError"
+        },
+        "ProductosData": {
+          "properties": {
+            "sku": {
+              "type": "string",
+              "title": "Sku"
+            },
+            "name": {
+              "type": "string",
+              "title": "Name"
+            },
+            "stock": {
+              "anyOf": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Stock"
+            },
+            "price": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Price"
+            }
+          },
+          "type": "object",
+          "required": [
+            "sku",
+            "name",
+            "stock",
+            "price"
+          ],
+          "title": "ProductosData"
+        },
+        "ProductosSell": {
+          "properties": {
+            "sku": {
+              "type": "string",
+              "title": "Sku"
+            },
+            "cantidad": {
+              "type": "integer",
+              "title": "Cantidad"
+            }
+          },
+          "type": "object",
+          "required": [
+            "sku",
+            "cantidad"
+          ],
+          "title": "ProductosSell"
+        },
+        "ProductosStock": {
+          "properties": {
+            "stock": {
+              "type": "integer",
+              "title": "Stock"
+            }
+          },
+          "type": "object",
+          "required": [
+            "stock"
+          ],
+          "title": "ProductosStock"
+        },
+        "ValidationError": {
+          "properties": {
+            "loc": {
+              "items": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              },
+              "type": "array",
+              "title": "Location"
+            },
+            "msg": {
+              "type": "string",
+              "title": "Message"
+            },
+            "type": {
+              "type": "string",
+              "title": "Error Type"
+            }
+          },
+          "type": "object",
+          "required": [
+            "loc",
+            "msg",
+            "type"
+          ],
+          "title": "ValidationError"
+        }
+      }
+    }
+  }

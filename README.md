@@ -1,6 +1,6 @@
 # Proyecto API_3B
 
-Este proyecto es una aplicación API desarrollada con FastAPI que realiza tres endpoints los cuales se enfocan en la gestion de prodcutos tipo punto de venta, se manejará un sistema de alertas que se ejecuta como un JOB el cual se realiza como proceso secundario, se generará documentación sobre la API y esetara todo montado sobre un ambiente docker simulando una arquitectura de multiprocesos, también se simulara una base no relacional de menera local con un documento JSON llamado data.json.
+Este proyecto es una aplicación API desarrollada con FastAPI que realiza cuatro endpoints los cuales se enfocan en la gestion de prodcutos tipo punto de venta, se manejará un sistema de alertas que se ejecuta cuando la condicion es aplicada, se generará documentación sobre la API y esetara todo montado sobre un ambiente docker simulando una arquitectura de multiprocesos, también se montara una base de datos mongodb en un contenedor externo y se realizaran consultas bajo un ORM.
 
 ## Requisitos
 
@@ -35,3 +35,7 @@ Para ejecutar las pruebas unitarias es necesario entrar al shell del contenedor 
 `docker exec -it api_3b-app-1 /bin/bash`
 `pytest`
 para salir del shell del contenedor de docker puede usar el comando `exit`
+
+## Documentación
+
+Se agrega in archivo llamado `documentacion_api.json` para que se facilite la importación del uso del endpoint a sistemas externos como Swagger o Postman, tambien se les recuerda que se puede acceder a la misma documentación y realizar las pruebas necesarias a los endpoints desde la url `http://localhost:8000/docs`
