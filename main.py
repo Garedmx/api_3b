@@ -1,9 +1,8 @@
 from fastapi import FastAPI, Query
 from typing import Optional, List, Dict, Any
 from pydantic import BaseModel
-from app.controllers import all_productos, new_producto, update_producto
+from app.controllers import all_productos, new_producto, update_producto, sell_productos
 from app.connection import conectar
-import json
 
 app = FastAPI()
 
@@ -17,6 +16,10 @@ class ProductosData(BaseModel):
 
 class ProductosStock(BaseModel):
     stock: int
+
+class ProductosSell(BaseModel):
+    sku: str
+    cantidad: int
 
 
 @app.get("/")
@@ -69,4 +72,12 @@ async def patch_producto(sku:str, data: ProductosStock):
     Este endpoint nos permite agregar stock a un sku
     """
     result = update_producto(sku, data)
+    return result
+
+@app.post("/api/orders")
+async def update_productos(sell_productos_list: List[ProductosSell]):
+    """
+    Este endpoint nos permite simular compras de productos restando el stock y detonando un JOB como alerta cuando el STOCK sea menor a 10
+    """
+    result = sell_productos(sell_productos_list)
     return result
