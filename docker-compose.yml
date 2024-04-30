@@ -18,4 +18,4 @@ services:
       - "27017:27017" # Expón el puerto de MongoDB para que pueda ser accedido desde el host
     volumes:
       - ./data/db:/data/db # Mapea un volumen para persistir los datos de MongoDB
-      - ./mongo-init-scripts:/docker-entrypoint-initdb.d # Montar el directorio de scripts de inicialización
+      

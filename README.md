@@ -21,7 +21,7 @@ Este proyecto es una aplicación API desarrollada con FastAPI que realiza tres e
 
 - POST `/api/products`: Se usa para crear un nuevo producto con los atributos sku y name (obligatorios). Un nuevo producto siempre se crea con un stock de 100.
 
-- PATCH `/api/inventroies/products/{PRODUCT_ID}`: Se usa para agregar stock al producto.
+- PATCH `/api/inventroies/products/{sku}`: Se usa para agregar stock al producto.
 
 - POST `/api/orders`: Para comprar productos
 
